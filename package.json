@@ -1,0 +1,32 @@
+{
+    "name": "fluentbuilder",
+    "version": "1.0.0",
+    "description": "A fluent way to create builders for tests",
+    "main": "index.js",
+    "scripts": {
+        "test": "jest --config jestconfig.json",
+        "build": "tsc",
+        "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+        "lint": "tslint --project tslint.json",
+        "prepare": "npm run build",
+        "prepublishOnly": "npm test && npm run lint",
+        "preversion": "npm run lint",
+        "version": "npm run format && git add -A src",
+        "postversion": "git push && git push --tags"
+    },
+    "author": "Lucas Teles",
+    "keywords": [
+        "Builder",
+        "Fluent",
+        "TS"
+    ],
+    "license": "MIT",
+    "dependencies": {},
+    "devDependencies": {
+        "@types/jest": "^23.3.7",
+        "jest": "^23.6.0",
+        "ts-jest": "^23.10.4",
+        "tslint": "^5.11.0",
+        "typescript": "^2.7.2"
+    }
+}
