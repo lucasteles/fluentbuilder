@@ -2,7 +2,8 @@
     "name": "fluentbuilder",
     "version": "1.0.0",
     "description": "A fluent way to create builders for tests",
-    "main": "index.js",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
     "scripts": {
         "test": "jest --config jestconfig.json",
         "build": "tsc",
