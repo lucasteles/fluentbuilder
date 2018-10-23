@@ -22,7 +22,7 @@ interface Foo {
 }
 ```
 
-You can define a shape for your builder and use the `from` method, which receives a factory function, it will use your shape to generate your teste data 
+You can define a shape for your builder and use the `from` method, which receives a factory function, it will use your shape to generate your test data 
 
 ```ts
   const builder = new Builder<Foo>()
@@ -65,6 +65,52 @@ builder.ruleFor(x => x.name, () => faker.random.alphaNumeric(10))
 
 In both forms we have a good intellisense/autocomplete help
 
+JS Style
+![](https://raw.githubusercontent.com/lucasteles/fluentbuilder/master/img/strcomplete.gif)
 
 
+C# Style
+![](https://raw.githubusercontent.com/lucasteles/fluentbuilder/master/img/funccomplete.gif)
 
+
+With this methods its easy to derive a class from Builder<T> and make a domain specific builder
+
+```ts
+import Builder from 'fluentbuilder'
+import * as faker from 'faker'
+
+class FooBuilder extends Builder<Foo> {
+    constructor(){
+        super()
+
+        // define basic props
+        this.from(() => ({
+            id: faker.random.number(),
+            name: faker.name.firstName()
+        }))
+    }
+
+    withName(name: string): this {
+        this.ruleFor("name", () => name);
+        return this
+    }
+}
+
+const fooBuilder = new FooBuilder()
+
+fooBuilder.generate() // { id: 58431, name: 'Lesley' }
+fooBuilder.withName("Fluffy").generate() // { id: 25927, name: 'Fluffy' }
+
+```
+
+The methods can be chained, so this can be a valid approach
+
+```ts
+
+const fooFactory = () =>
+    new Builder<Foo>()
+    .ruleFor("id", () => faker.random.number())
+    .ruleFor("name", () => faker.name.firstName())
+    .generate()
+
+```

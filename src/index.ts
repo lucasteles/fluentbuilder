@@ -1,11 +1,7 @@
 
 export default class Builder<T> {
 
-    private rules: (() => any)[]
-
-    constructor() {
-        this.rules = []
-    }
+    private rules: (() => any)[] = []
 
     from(gen: () => Partial<T>): this {
         this.rules.push(gen)

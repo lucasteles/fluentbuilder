@@ -1,6 +1,5 @@
 export default class Builder<T> {
     private rules;
-    constructor();
     from(gen: () => Partial<T>): this;
     private ruleForFunc<V>(property, v);
     private ruleForStr<K>(property, v);
