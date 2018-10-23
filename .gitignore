@@ -108,4 +108,5 @@ typings/
 .serverless
 
 
+.vscode
 # End of https://www.gitignore.io/api/node,angular
