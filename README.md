@@ -1,6 +1,6 @@
 # FluentBuilder
 
-FluentBuilder provides a simple way for creating data builders for your tests, with all thr beauty of a good intellisense.
+FluentBuilder provides a simple way for creating data builders for your tests, with all the beauty of a good intellisense.
 
 It's recommended to use with TypeScript and a library like [Faker.Js](https://github.com/marak/Faker.js/) for fake data.
 
