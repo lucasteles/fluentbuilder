@@ -8,45 +8,27 @@ export default class Builder<T> {
         return this
     }
 
-    private ruleForFunc<V>(property: (p: T) => V, v: () => V): this {
-        let pName = ''
-        const handler = {
-            get: (_, name) => { pName = name }
-        }
-        const proxy = new Proxy({}, handler)
-        property(proxy)
-
-        const factory = () => ({ [pName]: v() })
-        this.from(<any>factory)
-        return this
-    }
-
-    private ruleForStr<K extends keyof T>(property: K, v: () => T[K]): this {
+    ruleFor<K extends keyof T>(property: K, v: () => T[K]): this {
         const factory = () => ({ [property]: v() })
         this.from(<any>factory)
         return this
     }
 
-
-    ruleFor<V>(property: (p: T) => V, v: () => V): this
-    ruleFor<K extends keyof T>(property: K, v: () => T[K]): this
-    ruleFor(property, v): this 
+    generate(qtd: number): T[] 
+    generate(): T
+    generate(qtd?: number): T | T[]
     {
-        return typeof(property) == "function" 
-          ? this.ruleForFunc(property,v)
-          : this.ruleForStr(property, v)
-    }
-
-    generate(qtd?: number): T | T[] {
         const generate = () =>
             this.rules.reduce((a, b) => ({ ...a, ...b() }), {})
 
         if (qtd) {
-            return <T[]>Array(qtd)
-                .fill(undefined)
-                .map(() => generate())
+            return <T[]>Array.apply(0, Array(qtd)).map(() => generate())
         } else {
             return <T>generate()
         }
+    }
+
+    static create<T>(gen: () => Partial<T>): Builder<T> {
+        return new Builder<T>().from(gen)
     }
 }

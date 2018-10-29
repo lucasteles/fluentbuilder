@@ -1,6 +1,6 @@
 {
     "name": "fluentbuilder",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "description": "A fluent way to create builders for tests",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",

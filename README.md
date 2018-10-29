@@ -31,6 +31,12 @@ You can define a shape for your builder and use the `from` method, which receive
   builder.generate() // { id: 1, name: 'bar' }
 ```
 
+Or just use the `create` function
+
+```ts
+  const builder = Builder.create(() => ({ id: 1, name: 'bar' }))
+```
+
 This example is not very exciting, but if we put some [Faker.Js](https://github.com/marak/Faker.js/) we can do better
 
 ```ts
@@ -51,26 +57,16 @@ like that, every time we call `generate()` we will have a new data. note the fac
 
 ## Fluent Style
 
-You can define your value `rules` in an individual way, for it we have two methods (which did the same thing in a different way)
+You can define your value `rules` in an individual way 
 
-JS style
 ```ts
 builder.ruleFor("id", () => faker.random.number())
 ```
 
-kind of `C#` style
-```ts
-builder.ruleFor(x => x.name, () => faker.random.alphaNumeric(10))
-```
+We have a good intellisense/autocomplete help
 
-In both forms we have a good intellisense/autocomplete help
-
-JS Style
 ![](https://raw.githubusercontent.com/lucasteles/fluentbuilder/master/img/strcomplete.gif)
 
-
-C# Style
-![](https://raw.githubusercontent.com/lucasteles/fluentbuilder/master/img/funccomplete.gif)
 
 
 With this methods its easy to derive a class from Builder<T> and make a domain specific builder

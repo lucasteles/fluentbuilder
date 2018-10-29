@@ -33,16 +33,19 @@ test('should build from  complex shape', () => {
   expect(value).toStrictEqual(shape)
 })
 
+test('should build from static method', () => {
+  const shape: Partial<Foo>  = {
+    id: 1,
+    name: "name"
+  }
+  const value = Builder.create<Foo>(() => shape).generate()
+  expect(value).toStrictEqual(shape)
+})
+
 test('should define a value from a string property rule', () => {
   const value = builder.ruleFor("id", () => 1).generate()
 
   expect(value).toStrictEqual({ id: 1})
-})
-
-test('should define a value from a func property rule', () => {
-  const value = builder.ruleFor(x => x.name, () => "bar").generate()
-
-  expect(value).toStrictEqual({ name: "bar"})
 })
 
 test('should generate multiple instances of a shape ', () => {
@@ -50,6 +53,7 @@ test('should generate multiple instances of a shape ', () => {
     id: 1,
     name: "name"
   }
+
   const value = builder.from(() => shape).generate(2)
   expect(value).toStrictEqual([shape, shape])
 })
