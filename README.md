@@ -1,6 +1,6 @@
 # FluentBuilder
 
-FluentBuilder gives a simple way for creating data builder for your tests, with all beauty of an good intellisense.
+FluentBuilder provides a simple way for creating data builders for your tests, with all the beauty of a good intellisense.
 
 It's recommended to use with TypeScript and a library like [Faker.Js](https://github.com/marak/Faker.js/) for fake data.
 
@@ -13,7 +13,7 @@ npm i --save-dev fluentbuilder
 
 ## How To
 
-lets define an interface (can be a class or anything like)
+Let's define an interface (can be a class or anything like that)
 
 ```ts
 interface Foo {
@@ -22,7 +22,7 @@ interface Foo {
 }
 ```
 
-You can define a shape for your builder and use the `from` method, which receives a factory function, it will use your shape to generate your test data 
+Then define a shape for your builder and use the `from` method, which receives a factory function. It will use your shape to generate your test data
 
 ```ts
   const builder = new Builder<Foo>()
@@ -53,23 +53,23 @@ builder.generate() // { id: 7487, name: 'Joy' }
 builder.generate(2) // [ { id: 35751, name: 'Opal' }, { id: 94291, name: 'Savion' } ]
 ```
 
-like that, every time we call `generate()` we will have a new data. note the fact which if we pass a number as an argument to generate method, it will return an array of your type
+Like that, every time we call `generate()` we will have new data. Note the fact that if we pass a number as an argument to the `generate()` method, it will return an array of your type of the specified size
 
 ## Fluent Style
 
-You can define your value `rules` in an individual way 
+You can define `rules` for each of the properties in your type
 
 ```ts
 builder.ruleFor("id", () => faker.random.number())
 ```
 
-We have a good intellisense/autocomplete help
+We have great intellisense/autocomplete help
 
 ![](https://raw.githubusercontent.com/lucasteles/fluentbuilder/master/img/strcomplete.gif)
 
 
 
-With this methods its easy to derive a class from Builder<T> and make a domain specific builder
+With these methods it's easy to derive a class from Builder<T> and make a domain specific builder
 
 ```ts
 import Builder from 'fluentbuilder'
@@ -99,7 +99,7 @@ fooBuilder.withName("Fluffy").generate() // { id: 25927, name: 'Fluffy' }
 
 ```
 
-The methods can be chained, so this can be a valid approach
+The methods can be chained, so this is a valid approach
 
 ```ts
 
