@@ -20,7 +20,7 @@ export default class Builder<T> {
     ruleFor<K extends keyof T>(property: K, v: T[K] | (() => T[K])): this {
         const value = v instanceof Function ? v() : v
         const factory = () => ({ [property]: value })
-        this.from(<any>factory)
+        this.addShape(<any>factory)
         return this
     }
 
@@ -43,12 +43,12 @@ export default class Builder<T> {
     }
 
     @deprecated("use createBuilder standalone function instead")
-    static create<T>(gen: () => Partial<T>): Builder<T> {
-        return new Builder<T>().from(gen)
+    static create<T>(shape: () => Partial<T>): Builder<T> {
+        return createBuilder(shape)
     }
 }
 
-export const createBuilder = <T>(shape: () => Partial<T>) => Builder.create<T>(shape)
+export const createBuilder = <T>(shape: () => Partial<T>) => new Builder<T>().addShape(shape)
 
 export function generate<T>(shape: () => Partial<T>, qtd: number): T[] 
 export function generate<T>(shape: () => Partial<T>): T

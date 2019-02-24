@@ -7,7 +7,7 @@ export default class Builder<T> {
     generate(qtd: number): T[];
     generate(): T;
     generateRandom(qtdMin: number, qtdMax?: number): T[];
-    static create<T>(gen: () => Partial<T>): Builder<T>;
+    static create<T>(shape: () => Partial<T>): Builder<T>;
 }
 export declare const createBuilder: <T>(shape: () => Partial<T>) => Builder<T>;
 export declare function generate<T>(shape: () => Partial<T>, qtd: number): T[];
