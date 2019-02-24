@@ -59,7 +59,7 @@ builder.generate() // { id: 7487, name: 'Joy' }
 builder.generate(2) // [ { id: 35751, name: 'Opal' }, { id: 94291, name: 'Savion' } ]
 ```
 
-Like that, every time we call `generate()` we will have new data. Note the fact that if we pass a number as an argument to the `generate(n)` method, it will return an array of your type of the specified size
+Like that, every time we call `generate()` we will have new data. Note the fact that if we pass a number as an argument to the `generate(n)` method, it will return an array of your type of the specified size.
 
 ### Random data
 
