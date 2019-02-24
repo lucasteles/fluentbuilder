@@ -1,6 +1,6 @@
 {
     "name": "fluentbuilder",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "A fluent way to create builders for tests",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
@@ -22,7 +22,9 @@
         "TS"
     ],
     "license": "MIT",
-    "dependencies": {},
+    "dependencies": {
+        "deprecated-decorator": "^0.1.6"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/lucasteles/fluentbuilder"

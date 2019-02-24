@@ -1,9 +1,15 @@
 export default class Builder<T> {
     private rules;
-    from(gen: () => Partial<T>): this;
-    private ruleForFunc<V>(property, v);
-    private ruleForStr<K>(property, v);
-    ruleFor<V>(property: (p: T) => V, v: () => V): this;
+    from(shape: () => Partial<T>): this;
+    addShape(shape: () => Partial<T>): this;
+    ruleFor<K extends keyof T>(property: K, v: T[K]): this;
     ruleFor<K extends keyof T>(property: K, v: () => T[K]): this;
-    generate(qtd?: number): T | T[];
+    generate(qtd: number): T[];
+    generate(): T;
+    generateRandom(qtdMin: number, qtdMax?: number): T[];
+    static create<T>(gen: () => Partial<T>): Builder<T>;
 }
+export declare const createBuilder: <T>(shape: () => Partial<T>) => Builder<T>;
+export declare function generate<T>(shape: () => Partial<T>, qtd: number): T[];
+export declare function generate<T>(shape: () => Partial<T>): T;
+export declare function generateRandom<T>(shape: () => Partial<T>, qtdMin: number, qtdMax?: number): T[];

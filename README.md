@@ -11,7 +11,7 @@ Nothing new here, just npm install
 npm i --save-dev fluentbuilder
 ```
 
-## How To
+## Get Started
 
 Let's define an interface (can be a class or anything like that)
 
@@ -22,28 +22,31 @@ interface Foo {
 }
 ```
 
-Then define a shape for your builder and use the `from` method, which receives a factory function. It will use your shape to generate your test data
+Then define a shape for your builder and use the `addShape` method, which receives a factory function. It will use your shape to generate your test data
 
 ```ts
+  import Builder from 'fluentbuilder'
+
   const builder = new Builder<Foo>()
-  builder.from(() => ({ id: 1, name: 'bar' }))
+  builder.addShape(() => ({ id: 1, name: 'bar' }))
 
   builder.generate() // { id: 1, name: 'bar' }
 ```
 
-Or just use the `create` function
+You can use the `createBuilder` function
 
 ```ts
-  const builder = Builder.create(() => ({ id: 1, name: 'bar' }))
+  import { createBuilder } from 'fluentbuilder'
+  const builder = createBuilder<Foo>(() => ({ id: 1, name: 'bar' }))
 ```
 
 This example is not very exciting, but if we put some [Faker.Js](https://github.com/marak/Faker.js/) we can do better
 
 ```ts
 import * as faker from 'faker'
+import { createBuilder } from 'fluentbuilder'
 
-const builder = new Builder<Foo>()
-builder.from(() => ({ 
+const builder = createBuilder<Foo>(() => ({ 
     id: faker.random.number(),
     name: faker.name.firstName()
 }))
@@ -53,11 +56,55 @@ builder.generate() // { id: 7487, name: 'Joy' }
 builder.generate(2) // [ { id: 35751, name: 'Opal' }, { id: 94291, name: 'Savion' } ]
 ```
 
-Like that, every time we call `generate()` we will have new data. Note the fact that if we pass a number as an argument to the `generate()` method, it will return an array of your type of the specified size
+Like that, every time we call `generate()` we will have new data. Note the fact that if we pass a number as an argument to the `generate(n)` method, it will return an array of your type of the specified size
+
+### Random data
+
+You can generate a random size collection of data using the method `generateRandom` or using the exported function with the same name.
+
+
+```ts
+import * as faker from 'faker'
+import { createBuilder } from 'fluentbuilder'
+
+const builder = createBuilder<Foo>(() => ({ 
+    id: faker.random.number(),
+    name: faker.name.firstName()
+}))
+
+builder.generateRandom(2) // generate from 0 to 2 items
+builder.generateRandom(10,20) // generate from 10 to 20 items
+```
+
+it can be useful for nested array on types
+
+
+```ts
+interface Bar {
+    baz: number,
+    qux: string,
+    foos: Foo[],
+}
+
+import * as faker from 'faker'
+import { createBuilder, generateRandom } from 'fluentbuilder'
+
+const builder = createBuilder<Bar>(() => ({
+  baz: faker.random.number(),
+  qux: faker.name.firstName(),
+  foos: generateRandom<Foo>(() => ({
+      id: faker.random.number(),
+      name: faker.name.firstName()
+  }), 4)
+}))
+
+builder.generate() // { baz: 1,qux: 'some',foos: [ { id: 12, name: 'Steve' }, { id: 5, name: 'Jack' } ] }
+```
+
 
 ## Fluent Style
 
-You can define `rules` for each of the properties in your type
+You can define `rules` for each of the properties in your type suing the method `ruleFor()`, which receives the property which will be populated, and a value function or a raw value
 
 ```ts
 builder.ruleFor("id", () => faker.random.number())
@@ -87,7 +134,7 @@ class FooBuilder extends Builder<Foo> {
     }
 
     withName(name: string): this {
-        this.ruleFor("name", () => name);
+        this.ruleFor("name", name);
         return this
     }
 }
