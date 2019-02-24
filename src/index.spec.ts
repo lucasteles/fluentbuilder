@@ -46,7 +46,7 @@ describe('class instance testes', () => {
       id: 1,
       name: "name"
     }
-    const value = Builder.create<Foo>(() => shape).generate()
+    const value = createBuilder<Foo>(() => shape).generate()
     expect(value).toStrictEqual(shape)
   })
 
