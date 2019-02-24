@@ -32,6 +32,15 @@ describe('class instance testes', () => {
     expect(value).toStrictEqual(shape)
   })
 
+  test('should build from shape', () => {
+    const shape: Partial<Foo> = {
+      id: 1
+    }
+    const value = builder.from(() => shape).generate()
+
+    expect(value).toStrictEqual(shape)
+  })
+
   test('should build from  complex shape', () => {
     const shape: Partial<Foo> = {
       id: 1,
@@ -46,7 +55,7 @@ describe('class instance testes', () => {
       id: 1,
       name: "name"
     }
-    const value = createBuilder<Foo>(() => shape).generate()
+    const value = Builder.create(() => shape).generate()
     expect(value).toStrictEqual(shape)
   })
 
