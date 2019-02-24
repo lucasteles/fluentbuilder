@@ -1,6 +1,7 @@
 # FluentBuilder
 [![npm version](https://badge.fury.io/js/fluentbuilder.svg)](https://badge.fury.io/js/fluentbuilder)
-
+[![Build Status](https://travis-ci.org/lucasteles/fluentbuilder.svg?branch=master)](https://travis-ci.org/lucasteles/fluentbuilder)
+[![Coverage Status](https://coveralls.io/repos/github/lucasteles/fluentbuilder/badge.svg?branch=master)](https://coveralls.io/github/lucasteles/fluentbuilder?branch=master)
 
 FluentBuilder provides a simple way for creating data builders for your tests, with all the beauty of a good intellisense.
 
