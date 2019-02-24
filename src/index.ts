@@ -39,7 +39,7 @@ export default class Builder<T> {
     generateRandom(qtdMin: number, qtdMax?: number): T[] 
     {
         const rand = randomInt(qtdMin, qtdMax) 
-        return this.generate(rand) 
+        return this.generate(rand === 0 ? 1 : rand) 
     }
 
     @deprecated("use createBuilder standalone function instead")

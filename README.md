@@ -75,7 +75,7 @@ const builder = createBuilder<Foo>(() => ({
     name: faker.name.firstName()
 }))
 
-builder.generateRandom(2) // generate from 0 to 2 items
+builder.generateRandom(2) // generate from 1 to 2 items
 builder.generateRandom(10,20) // generate from 10 to 20 items
 ```
 

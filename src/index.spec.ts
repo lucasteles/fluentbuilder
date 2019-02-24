@@ -145,6 +145,17 @@ describe('static and standalone functions', () => {
     expect(mockRandom).toHaveBeenCalledWith(10, undefined)
   })
 
+  test('should generate 1 item if random returns 0', () => {
+    const shape: Partial<Foo> = {
+      id: 1,
+      name: "name"
+    }
+    mockRandom.mockReturnValueOnce(0)
+    const values = generateRandom(() => shape, 10)  
+    
+    expect(values.length).toBe(1)
+    expect(mockRandom).toHaveBeenCalledWith(10, undefined)
+  })
   test('should generate data in range', () => {
     const shape: Partial<Foo> = {
       id: 1,
