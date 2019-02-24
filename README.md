@@ -1,4 +1,6 @@
 # FluentBuilder
+[![npm version](https://badge.fury.io/js/fluentbuilder.svg)](https://badge.fury.io/js/fluentbuilder)
+
 
 FluentBuilder provides a simple way for creating data builders for your tests, with all the beauty of a good intellisense.
 

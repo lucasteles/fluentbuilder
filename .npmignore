@@ -5,3 +5,4 @@ tslint.json
 jestconfig.json
 wallaby.js
 .vscode
+junit.xml
