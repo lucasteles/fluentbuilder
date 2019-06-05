@@ -111,8 +111,6 @@ describe('class instance testes', () => {
 })
 
 describe('static and standalone functions', () => {
-
-
   test('createBuilder standalone functions should work', () => {
     const shape: Partial<Foo> = {
       id: 1,
@@ -132,6 +130,18 @@ describe('static and standalone functions', () => {
     expect(value).toStrictEqual([shape, shape])
   })
 
+  test('faker works', () => {
+    const shape: Partial<Foo> = {
+      id: 1,
+      name: "name"
+    }
+    const value = generate<Foo>(f => ({ 
+        id: f.random.number()
+    }))
+    // expect(value).toStrictEqual([shape, shape])
+
+    value // ?
+  })
 
   test('should generate data in fix range', () => {
     const shape: Partial<Foo> = {
@@ -140,7 +150,7 @@ describe('static and standalone functions', () => {
     }
     mockRandom.mockReturnValueOnce(3)
     const values = generateRandom(() => shape, 10)  
-    
+     
     expect(values.length).toBe(3)
     expect(mockRandom).toHaveBeenCalledWith(10, undefined)
   })
