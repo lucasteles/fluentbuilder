@@ -5,7 +5,7 @@
 
 FluentBuilder provides a simple way for creating data builders for your tests, with all the beauty of a good intellisense.
 
-It's recommended to use with TypeScript and a library like [Faker.Js](https://github.com/marak/Faker.js/) for fake data.
+It's use [Faker.Js](https://github.com/marak/Faker.js/) for fake data.
 
 ## Installation
 
@@ -43,13 +43,14 @@ You can use the `createBuilder` function
   const builder = createBuilder<Foo>(() => ({ id: 1, name: 'bar' }))
 ```
 
-This example is not very exciting, but if we put some [Faker.Js](https://github.com/marak/Faker.js/) we can do better
+This example is not very exciting, but if we put some [Faker.Js](https://github.com/marak/Faker.js/) we can do better!
+
+The delegate used can receive a parameter, which is an instance of FajerJs
 
 ```ts
-import * as faker from 'faker'
 import { createBuilder } from 'fluentbuilder'
 
-const builder = createBuilder<Foo>(() => ({ 
+const builder = createBuilder<Foo>(faker => ({ 
     id: faker.random.number(),
     name: faker.name.firstName()
 }))
@@ -67,10 +68,9 @@ You can generate a random size collection of data using the method `generateRand
 
 
 ```ts
-import * as faker from 'faker'
 import { createBuilder } from 'fluentbuilder'
 
-const builder = createBuilder<Foo>(() => ({ 
+const builder = createBuilder<Foo>(faker => ({ 
     id: faker.random.number(),
     name: faker.name.firstName()
 }))
@@ -89,10 +89,9 @@ interface Bar {
     foos: Foo[],
 }
 
-import * as faker from 'faker'
 import { createBuilder, generateRandom } from 'fluentbuilder'
 
-const builder = createBuilder<Bar>(() => ({
+const builder = createBuilder<Bar>(faker => ({
   baz: faker.random.number(),
   qux: faker.name.firstName(),
   foos: generateRandom<Foo>(() => ({
@@ -110,7 +109,7 @@ builder.generate() // { baz: 1,qux: 'some',foos: [ { id: 12, name: 'Steve' }, { 
 You can define `rules` for each of the properties in your type suing the method `ruleFor()`, which receives the property which will be populated, and a value function or a raw value
 
 ```ts
-builder.ruleFor("id", () => faker.random.number())
+builder.ruleFor("id", faker => faker.random.number())
 ```
 
 We have great intellisense/autocomplete help
@@ -123,14 +122,13 @@ With these methods it's easy to derive a class from Builder<T> and make a domain
 
 ```ts
 import Builder from 'fluentbuilder'
-import * as faker from 'faker'
 
 class FooBuilder extends Builder<Foo> {
     constructor(){
         super()
 
         // define basic props
-        this.from(() => ({
+        this.from(faker => ({
             id: faker.random.number(),
             name: faker.name.firstName()
         }))
@@ -155,8 +153,21 @@ The methods can be chained, so this is a valid approach
 
 const fooFactory = () =>
     new Builder<Foo>()
-    .ruleFor("id", () => faker.random.number())
-    .ruleFor("name", () => faker.name.firstName())
+    .ruleFor("id", f => f.random.number())
+    .ruleFor("name", f => f.name.firstName())
     .generate()
+
+```
+
+## Localization
+
+You can change de locale with a function `setLocale`
+
+suported locales can be checked [here](https://github.com/marak/Faker.js/#localization)
+
+```ts
+import { setLocale } from 'fluentbuilder'
+
+setLocale("pt_BR")
 
 ```

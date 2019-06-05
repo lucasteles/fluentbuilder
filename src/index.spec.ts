@@ -2,7 +2,7 @@
 const mockRandom = jest.fn()
 jest.mock('./random', () => ({ default: mockRandom}) )
 
-import Builder from './index'
+import Builder, { setLocale } from './index'
 import { createBuilder, generate, generateRandom } from './index'
 
 interface Foo {
@@ -32,14 +32,6 @@ describe('class instance testes', () => {
     expect(value).toStrictEqual(shape)
   })
 
-  test('should build from shape', () => {
-    const shape: Partial<Foo> = {
-      id: 1
-    }
-    const value = builder.from(() => shape).generate()
-
-    expect(value).toStrictEqual(shape)
-  })
 
   test('should build from  complex shape', () => {
     const shape: Partial<Foo> = {
@@ -50,14 +42,6 @@ describe('class instance testes', () => {
     expect(value).toStrictEqual(shape)
   })
 
-  test('should build from static method', () => {
-    const shape: Partial<Foo> = {
-      id: 1,
-      name: "name"
-    }
-    const value = Builder.create(() => shape).generate()
-    expect(value).toStrictEqual(shape)
-  })
 
   test('should define a value from a string property rule', () => {
     const value = builder.ruleFor("id", () => 1).generate()
@@ -105,7 +89,6 @@ describe('class instance testes', () => {
     
     expect(values.length).toBe(15)
     expect(mockRandom).toHaveBeenCalledWith(10, 20)
-
   })
 
 })
@@ -131,16 +114,18 @@ describe('static and standalone functions', () => {
   })
 
   test('faker works', () => {
+    setLocale('pt_BR')
     const shape: Partial<Foo> = {
       id: 1,
       name: "name"
     }
     const value = generate<Foo>(f => ({ 
-        id: f.random.number()
+        id: f.random.number(),
+        name: f.name.findName(),
     }))
-    // expect(value).toStrictEqual([shape, shape])
 
-    value // ?
+    expect(value.name).toBeTruthy()
+    expect(value.id).toBeTruthy()
   })
 
   test('should generate data in fix range', () => {
