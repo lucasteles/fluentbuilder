@@ -1,7 +1,7 @@
 import randomInt from "./random"
 import  * as faker from "faker"
 
-type Faker = Faker.FakerStatic
+export type Faker = Faker.FakerStatic
 
 export default class Builder<T> {
     private rules: ((dataFactory : Faker) => any)[] = []
