@@ -99,7 +99,6 @@ describe('static and standalone functions', () => {
       id: 1,
       name: "name"
     }
-
     const value = createBuilder(() => shape).generate(2)
     expect(value).toStrictEqual([shape, shape])
   })
