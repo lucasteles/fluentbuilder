@@ -32,7 +32,6 @@ describe('class instance testes', () => {
     expect(value).toStrictEqual(shape)
   })
 
-
   test('should build from  complex shape', () => {
     const shape: Partial<Foo> = {
       id: 1,
@@ -41,7 +40,6 @@ describe('class instance testes', () => {
     const value = builder.addShape(() => shape).generate()
     expect(value).toStrictEqual(shape)
   })
-
 
   test('should define a value from a string property rule', () => {
     const value = builder.ruleFor("id", () => 1).generate()
@@ -91,6 +89,14 @@ describe('class instance testes', () => {
     expect(mockRandom).toHaveBeenCalledWith(10, 20)
   })
 
+  test('should generate random objects', () => {
+    const fakes = builder
+      .ruleFor("id", (faker) => faker.random.number())
+      .ruleFor('name', (faker) => faker.name.firstName())
+      .generate(2)
+
+    expect(fakes[0]).not.toEqual(fakes[1])
+  })
 })
 
 describe('static and standalone functions', () => {
@@ -150,6 +156,7 @@ describe('static and standalone functions', () => {
     expect(values.length).toBe(1)
     expect(mockRandom).toHaveBeenCalledWith(10, undefined)
   })
+
   test('should generate data in range', () => {
     const shape: Partial<Foo> = {
       id: 1,
