@@ -15,8 +15,7 @@ export default class Builder<T> {
     ruleFor<K extends keyof T>(property: K, v:  T[K]): this 
     ruleFor<K extends keyof T>(property: K, v: (dataFactory : Faker) => T[K]): this 
     ruleFor<K extends keyof T>(property: K, v: T[K] | ((dataFactory : Faker) => T[K])): this {
-        const value = v instanceof Function ? v(faker) : v
-        const factory = () => ({ [property]: value })
+        const factory = () => ({ [property]: v instanceof Function ? v(faker) : v })
         this.addShape(<any>factory)
         return this
     }
