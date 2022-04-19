@@ -6,7 +6,7 @@
     "types": "lib/index.d.ts",
     "scripts": {
         "test": "jest --config jestconfig.json --coverage",
-        "cover": "jest --config jestconfig.json --ci --coverage && cat ./coverage/lcov.info | coveralls",
+        "cover": "jest --config jestconfig.json --ci --coverage",
         "build": "tsc",
         "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
         "lint": "tslint --project tslint.json",
